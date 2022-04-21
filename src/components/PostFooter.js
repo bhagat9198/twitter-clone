@@ -6,7 +6,7 @@ import { FiTriangle } from 'react-icons/fi'
 export default function PostFooter(props) {
   const { metrics, reply_settings, source } = props;
   const { like_count, quote_count, reply_count, retweet_count } = metrics;
-  console.log('PostFooter :: props :: ', props);
+  // console.log('PostFooter :: props :: ', props);
 
   return (
     <>

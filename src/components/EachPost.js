@@ -14,18 +14,22 @@ export default function EachPost(props) {
 
   function replyToUI() {
     if (post.entities && post.entities.mentions && post.entities.mentions.length > 0) {
-      return post.entities.mentions.map(m => {
+      return post.entities.mentions.map((m, i) => {
         let isReplyTo = text.substring(0, 2);
         if (isReplyTo.includes('RT')) {
           initialTrim = m.end + 1;
           m.used = true;
-          return <>Replying to <Link to='/'>{`@${m.username}  `}</Link></>
+          if (i === 0) {
+            return <>Replying to <Link to='/'>{`@${m.username}  `}</Link></>
+          }
+          return <Link to='/'>{`@${m.username}  `}</Link>
         }
-        // hello
-        console.log();
         if (m.start == 0) {
           initialTrim = m.end + 1;
-          return <>Replying to <Link to='/'>{`@${m.username}  `}</Link></>
+          if (i === 0) {
+            return <>Replying to <Link to='/'>{`@${m.username}  `}</Link></>
+          }
+          return <Link to='/'>{`@${m.username}  `}</Link>
         }
       })
     }
@@ -87,8 +91,6 @@ export default function EachPost(props) {
     let sortedModifer = [];
     let max;
     let selectedIndex;
-    // console.log('EachPost :: textUI :: sortedModifer : ', sortedModifer);
-    // console.log('EachPost :: textUI :: modifers : ', modifers);
 
     for (let i = 0; i < modifers.length; i++) {
       max = modifers[0].end;
@@ -107,8 +109,7 @@ export default function EachPost(props) {
       }
     }
 
-
-    console.log('EachPost :: textUI :: sortedModifer :: ', sortedModifer, modifers);
+    // console.log('EachPost :: textUI :: sortedModifer :: ', sortedModifer, modifers);
 
     if (sortedModifer.length > 0) {
       let prevIndex = 0;
@@ -116,16 +117,12 @@ export default function EachPost(props) {
         let txtComp;
         if (index == 0 && initialTrim > 0) {
           prevIndex = initialTrim
-          console.log('prevIndex :: ', prevIndex);
-          console.log('prevIndex :: ', text.substring(prevIndex, m.start));
           if (prevIndex >= m.start) {
             txtComp = <></>
           } else {
             txtComp = <>{text.substring(prevIndex, m.start)} {m.modifiedText}</>;
           }
         } else {
-          console.log('prevIndex :: ', text.substring(prevIndex, m.start));
-
           txtComp = <>{text.substring(prevIndex, m.start)} {m.modifiedText} </>;
         }
         prevIndex = m.end;
@@ -143,12 +140,11 @@ export default function EachPost(props) {
   function mediaUi() {
     if (media.length > 0) {
       return (<>
-        <div style={{ display: 'flex', width: '100%', height: '400px', borderRadius: '30px', marginTop: '10px' }}>
+        <div className='wrapper ' >
           {
             media.map(m => {
               if (m.type == 'photo') {
-
-                return <img style={{ height: '100%', objectFit: 'cover', width: '100%' }} src={m.url} alt={m.media_key} />
+                return <img key={m.media_key} src={m.url} alt={m.media_key} className='img' />
               } else if (m.type == 'media') {
                 return <>
                   <ReactPlayer src={m.url} />
