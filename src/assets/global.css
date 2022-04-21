@@ -9,6 +9,9 @@
   width: 25%;
   height: 100vh;
   border-right: 1px solid rgb(211, 211, 211);
+  position: sticky;
+  top: 0;
+  left: 0;
 }
 
 .nav-item {
@@ -40,7 +43,31 @@
 }
 
 .each-post {
+  padding-left: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.each-post:hover {
+  background-color: rgb(231, 229, 229);
+}
+
+.post-heading {
   display: flex;
+  align-items: center;
+}
+
+.post-heading p {
+  padding: 0;
+  margin: 0;
+}
+
+.post-footer-item {
+  flex-grow: 1;
+}
+
+.post-footer-icon {
+  padding-right: 10px;
 }
 
 .extra {
@@ -61,6 +88,10 @@ input[type=text]:focus {
 
 }
 
+a {
+  text-decoration: none;
+}
+
 @media only screen and (max-width: 992px) {
   .main-body {
     width: 100%;
@@ -71,11 +102,12 @@ input[type=text]:focus {
     width: 10%;
     min-width: fit-content;
   }
+
   .nav-desc {
     display: none;
   }
 
-  
+
 }
 
 @media only screen and (max-width: 768px) {
