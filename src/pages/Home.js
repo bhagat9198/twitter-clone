@@ -24,7 +24,7 @@ export default function Home() {
 
   function allTweetsUi() {
     if (allTweets.length == 0) {
-      return <div style={{ display: 'flex', justifyContent: 'center' }} >Search for Tweets</div>
+      return <div style={{ display: 'flex', justifyContent: 'center', fontSize: '120%', padding: '20px' }} >Search for Tweets</div>
     }
 
     return allTweets.map((post, index) => {
@@ -67,7 +67,7 @@ export default function Home() {
               next={() => dispatch(fetchMoreQueryData())}
               hasMore={true}
               // scrollableTarget="scrollableDiv"
-              loader={<>llll</>}
+              loader={<></>}
               endMessage={
                 <p style={{ textAlign: 'center' }}>
                   <b>Yay! You have seen it all</b>

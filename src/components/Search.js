@@ -58,7 +58,7 @@ export default function Search({ searchFocus, setSearchFocus }) {
       <input
         ref={searchRef}
         type="text"
-        placeholder='Search Twitter'
+        placeholder='Search Twitter (Press Enter to Search) '
         value={input}
         onChange={e => setInput(e.target.value)}
         onKeyDown={keyDownHandler}
