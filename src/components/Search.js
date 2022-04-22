@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { BsSearch, BsXCircleFill } from 'react-icons/bs';
 import { useDispatch } from 'react-redux'
+import { toast } from 'react-toastify';
 import { fetchLatestQueryData, fetchQuery } from '../store/actions';
 
 
-export default function Search({ searchFocus, setSearchFocus }) {
+export default function Search({ searchFocus, setSearchFocus, setMg }) {
   const [input, setInput] = useState('');
   const [searchQuery, setSearchQuery] = useState(false);
   const dispatch = useDispatch();
@@ -17,6 +18,9 @@ export default function Search({ searchFocus, setSearchFocus }) {
     async function asyncFun() {
       const res = await dispatch(fetchQuery({ query: input }));
       // console.log('Search :: res :: ', res);
+      if (!res.status) {
+        toast.error('Looks like API not working, switch to local devlopment.')
+      }
       setSearchQuery(false);
       setSearchFocus(false);
     }
@@ -39,10 +43,14 @@ export default function Search({ searchFocus, setSearchFocus }) {
     if (e.keyCode != 13) {
       return
     }
-
+    setMg(`Searching for "${input}"`)
     setSearchQuery(true);
     const subscriber = setInterval(() => {
-      dispatch(fetchLatestQueryData({ query: input }));
+      const res = dispatch(fetchLatestQueryData({ query: input }));
+      if (!res.status) {
+        toast.error('Looks like API not working, switch to local devlopment.')
+      }
+
     }, 1000 * 60)
 
     return () => subscriber;
@@ -54,7 +62,7 @@ export default function Search({ searchFocus, setSearchFocus }) {
 
   return (
     <div className='input-text'>
-      <BsSearch style={{ fontSize: '150%', marginRight: '20px' }} />
+      <BsSearch className='searchIcon' />
       <input
         ref={searchRef}
         type="text"
@@ -65,7 +73,7 @@ export default function Search({ searchFocus, setSearchFocus }) {
         style={{ flex: 1 }}
       />
       {input && <BsXCircleFill
-        style={{ cursor: 'pointer', fontSize: '150%' }}
+        className='clearSearchIcon'
         onClick={clearSearchHandler} />}
     </div>
   )

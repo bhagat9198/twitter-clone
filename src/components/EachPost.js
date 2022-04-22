@@ -56,7 +56,7 @@ export default function EachPost(props) {
         if (u.description) {
           displayBanners.push(
             <>
-              <div style={{ border: '1px solid gray', display: 'flex', marginTop: '5px', marginBottom: '5px', padding: '5px', borderRadius: '10px' }}>
+              <div className='bannerCont flex'>
                 <div>
                   {u?.img && <img src={u.img} alt='thumnail' />}
                 </div>
@@ -140,7 +140,7 @@ export default function EachPost(props) {
   function mediaUi() {
     if (media.length > 0) {
       return (<>
-        <div className='wrapper ' >
+        <div className='wrapper' >
           {
             media.map(m => {
               if (m.type == 'photo') {
@@ -171,35 +171,30 @@ export default function EachPost(props) {
 
   return (
     <div className='each-post' >
-      <div style={{ display: 'flex' }} >
+      <div className='flex' >
         <div>
-          <div style={{
-            borderRadius: '50%', background: 'gray',
-            aspectRatio: '1 1',
-            height: '50px', width: '50px',
-            display: 'flex', alignItems: 'center', justifyContent: 'center'
-          }} >
+          <div className='eachPostImg flex justifyCenter alignCenter' >
             {user.profile_image_url ?
-              <img style={{ width: '100%', height: '100%', borderRadius: '50%' }} src={user.profile_image_url} alt="img" />
+              <img className='post-user-img' src={user.profile_image_url} alt="img" />
               : <AiOutlineUser style={{ fontSize: '150%' }} />}
           </div>
         </div>
-        <div style={{ padding: '10px 20px 0px 20px', width: '100%' }}>
-          <div style={{ paddingBottom: '30px' }}>
+        <div className='post-body-cont' >
+          <div className='post-body'>
             <div style={{ paddingBottom: '10px' }}>
-              <div className='post-heading' style={{ display: 'flex', alignItems: 'center' }}>
-                <p style={{ paddingRight: '10px', fontSize: '110%' }} ><b>{user.name}</b></p>
-                {user.verified && <div style={{ width: '25px', height: '25px', aspectRatio: '1 1', margin: '0 10px' }}>
-                  <img alt='img' style={{ width: '100%', height: '100%', objectFit: 'contain' }} src="https://img.icons8.com/ios-filled/50/000000/verified-account.png" />
+              <div className='post-heading flex alignCenter' >
+                <p className='post-user-sub1' ><b>{user.name}</b></p>
+                {user.verified && <div className='verfiedDiv' >
+                  <img alt='img' className='verfiedImg' src="https://img.icons8.com/ios-filled/50/000000/verified-account.png" />
                 </div>}
-                <p style={{ paddingRight: '10px', fontSize: '90%', color: 'gray' }} >
+                <p className='post-user-sub2' >
                   @{user.username}
                 </p>
-                <p style={{ paddingRight: '10px', fontSize: '90%', color: 'gray' }} >
+                <p className='post-user-sub2' >
                   {formateDate({ isoDate: post.created_at })}
                 </p>
               </div>
-              <div style={{ fontSize: '90%', color: 'gray' }}>
+              <div className='post-user-sub2'>
                 {replyToUI()}
               </div>
             </div>

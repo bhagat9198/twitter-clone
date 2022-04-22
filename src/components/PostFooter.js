@@ -10,32 +10,32 @@ export default function PostFooter(props) {
 
   return (
     <>
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <div className='post-footer-item' style={{ minWidth: '70px' }}>
+      <div className='flex justifyCenter'>
+        <div className='post-footer-item'>
           <span className='post-footer-icon'>
             <BsChat />
           </span>
           <span className='post-footer-info'>{reply_count ? reply_count : ''}</span>
         </div>
-        <div className='post-footer-item' style={{ minWidth: '70px' }}>
+        <div className='post-footer-item'>
           <span className='post-footer-icon'>
             <AiOutlineRetweet />
           </span>
           <span className='post-footer-info'>{retweet_count ? retweet_count : ''}</span>
         </div>
-        <div className='post-footer-item' style={{ minWidth: '70px' }}>
+        <div className='post-footer-item'>
           <span className='post-footer-icon'>
             <AiOutlineHeart />
           </span>
           <span className='post-footer-info'>{like_count ? like_count : ''}</span>
         </div>
-        <div className='post-footer-item' style={{ minWidth: '70px' }}>
+        <div className='post-footer-item'>
           <span className='post-footer-icon'>
             <BsUpload />
           </span>
           <span className='post-footer-info'></span>
         </div>
-        <div className='post-footer-item' style={{ minWidth: '70px' }}>
+        <div className='post-footer-item'>
           <span className='post-footer-icon'>
             <FiTriangle />
           </span>

@@ -5,7 +5,7 @@ import { AiOutlineUser, AiOutlineBell, AiOutlineSearch } from 'react-icons/ai'
 import { MdOutlineNotificationsActive } from 'react-icons/md'
 import { clearTweetsData, fetchNewTweets } from '../store/actions';
 
-export default function Navigation({ setSearchFocus }) {
+export default function Navigation({ setSearchFocus, setMg }) {
   const dispatch = useDispatch();
   const isLatestTweet = useSelector(state => state.reducer).latestData;
   const userProfile = useSelector(state => state.reducer).userProfile;
@@ -16,6 +16,7 @@ export default function Navigation({ setSearchFocus }) {
 
   const searchHandler = () => {
     setSearchFocus(true);
+    setMg('Search for Tweets')
     dispatch(clearTweetsData());
   }
 
@@ -26,11 +27,11 @@ export default function Navigation({ setSearchFocus }) {
 
   return (
     <div className='navigation'>
-      <div style={{ display: 'flex', flexDirection: 'column', height: '100%', alignItems: 'center', paddingRight: '10%' }}>
+      <div className='navigation-cont flex alignCenter'>
         <div style={{ flex: 1 }} >
           <div className='nav-item'>
             <p className='nav-icon'>
-              <BsTwitter style={{ fontSize: '150%' }} />
+              <BsTwitter style={{ fontSize: '120%', color: '#00ACEE' }} />
             </p>
           </div>
           <div className='nav-item' onClick={homeHandler} >
@@ -47,7 +48,7 @@ export default function Navigation({ setSearchFocus }) {
           </div>
           <div className='nav-item' onClick={notificationHandler}>
             <p className='nav-icon'>
-              {isLatestTweet ? <MdOutlineNotificationsActive /> : <AiOutlineBell />}
+              {isLatestTweet ? <MdOutlineNotificationsActive style={{ color: '#00ACEE', fontWeight: 'bold' }} /> : <AiOutlineBell />}
             </p>
             <p className='nav-desc'>Notifications</p>
           </div>

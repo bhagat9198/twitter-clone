@@ -19,11 +19,10 @@ const reducer = (state = initialState, action) => {
   let query;
   let tweets;
   let users;
-  let includes;
+  let includes_obj = {}
 
   switch (action.type) {
     case QUERY:
-      // console.log('reducer :: action :: ', action);
       return {
         ...state,
         query: action.query,
@@ -38,18 +37,18 @@ const reducer = (state = initialState, action) => {
       query = action.query;
       tweets = [...state.tweets, ...action.tweets];
       users = [...state.users, ...action.users];
-      includes = {};
+      includes_obj = {};
 
       if (action?.includes?.users) {
-        includes.users = [...state?.includes?.users, ...action?.includes?.users];
+        includes_obj.users = [...state?.includes?.users, ...action?.includes?.users];
       } else {
-        includes.users = [...state?.includes?.users];
+        includes_obj.users = [...state?.includes?.users];
       }
 
       if (action?.includes?.media) {
-        includes.media = [...state?.includes?.media, ...action?.includes?.media];
+        includes_obj.media = [...state?.includes?.media, ...action?.includes?.media];
       } else {
-        includes.media = [...state?.includes?.media];
+        includes_obj.media = [...state?.includes?.media];
       }
 
       return {
@@ -57,7 +56,7 @@ const reducer = (state = initialState, action) => {
         query: query,
         tweets: tweets,
         users: users,
-        includes: includes
+        includes: includes_obj
       }
     case CLEAR_DATA:
       return {
@@ -79,18 +78,18 @@ const reducer = (state = initialState, action) => {
       query = action.query;
       tweets = [...action.tweets, ...state.tweets];
       users = [...action.users, ...state.users];
-      let includes = {};
+      includes_obj = {};
 
       if (action?.includes?.users) {
-        includes.users = [...action?.includes?.users, ...state?.includes?.users];
+        includes_obj.users = [...action?.includes?.users, ...state?.includes?.users];
       } else {
-        includes.users = [...state?.includes?.users];
+        includes_obj.users = [...state?.includes?.users];
       }
 
       if (action?.includes?.media) {
-        includes.media = [...action?.includes?.media, ...state?.includes?.media];
+        includes_obj.media = [...action?.includes?.media, ...state?.includes?.media];
       } else {
-        includes.media = [...state?.includes?.media];
+        includes_obj.media = [...state?.includes?.media];
       }
 
       return {
@@ -98,7 +97,7 @@ const reducer = (state = initialState, action) => {
         query: query,
         tweets: tweets,
         users: users,
-        includes: includes
+        includes: includes_obj
       }
     default:
       return state;

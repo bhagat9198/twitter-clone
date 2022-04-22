@@ -7,6 +7,7 @@ import Main from '../components/Main'
 import Navigation from '../components/Navigation'
 import Search from '../components/Search'
 import { fetchMoreQueryData } from '../store/actions';
+import { toast } from 'react-toastify';
 
 export default function Home() {
   const allTweets = useSelector(state => state.reducer).tweets;
@@ -14,6 +15,8 @@ export default function Home() {
   const query = useSelector(state => state.reducer).query;
   const allUsers = useSelector(state => state.reducer).users;
   const [searchFocus, setSearchFocus] = useState(true);
+  const [msg, setMg] = useState('Search for Tweets');
+  const [hasMore, setHasMore] = useState(true);
 
   const dispatch = useDispatch();
 
@@ -24,7 +27,7 @@ export default function Home() {
 
   function allTweetsUi() {
     if (allTweets.length == 0) {
-      return <div style={{ display: 'flex', justifyContent: 'center', fontSize: '120%', padding: '20px' }} >Search for Tweets</div>
+      return <div className='flex justifyCenter searchTweets' >{msg}</div>
     }
 
     return allTweets.map((post, index) => {
@@ -53,24 +56,31 @@ export default function Home() {
 
   }
 
+  async function loadMore() {
+    const res = await dispatch(fetchMoreQueryData())
+    if (!res.status) {
+      setHasMore(false)
+      toast.error('Looks like API not working, switch to local devlopment.')
+    }
+  }
+
   return (
     <>
       <div className='main-body' >
-        <Navigation setSearchFocus={setSearchFocus} />
+        <Navigation setMg={setMg} setSearchFocus={setSearchFocus} />
         <Main>
-          <div style={{ borderBottom: '1px solid rgb(211, 211, 211)', padding: '20px' }} >
-            <Search searchFocus={searchFocus} setSearchFocus={setSearchFocus} />
+          <div className='searchCont' >
+            <Search setMg={setMg} searchFocus={searchFocus} setSearchFocus={setSearchFocus} />
           </div>
-          <div id='scrollableDiv'>
+          <div>
             <InfiniteScroll
               dataLength={allTweets.length} //This is important field to render the next data
-              next={() => dispatch(fetchMoreQueryData())}
-              hasMore={true}
-              // scrollableTarget="scrollableDiv"
-              loader={<></>}
+              next={loadMore}
+              hasMore={hasMore}
+              loader={<>{allTweets?.length > 0 ? <div className='flex justifyCenter searchTweets' >Loading More Tweets...</div> : ''}</>}
               endMessage={
-                <p style={{ textAlign: 'center' }}>
-                  <b>Yay! You have seen it all</b>
+                allTweets?.length > 0 && <p style={{ textAlign: 'center' }}>
+                  <div className='flex justifyCenter searchTweets' >You have seen it all</div>
                 </p>
               }
             // // below props only if you need pull down functionality

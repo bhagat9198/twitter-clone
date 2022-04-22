@@ -30,7 +30,10 @@ export const fetchQuery = ({ query }) => {
 
       const usersData = await loadUsers({ posts: res.data.data.data })
       if (!usersData.status) {
-        throw Error('Unable to fetch users')
+        // throw Error('Unable to fetch users')
+        return {
+          status: false
+        }
       }
       const users = usersData.data;
 
@@ -83,9 +86,12 @@ export const fetchLatestQueryData = ({ query }) => {
 
       nextToken = res.data.data.meta.next_token;
 
-      const usersData = await loadUsers({ posts: tweets_data })
+      const usersData = await loadUsers({ posts: tweets_data });
       if (!usersData.status) {
-        throw Error('Unable to fetch users')
+        // throw Error('Unable to fetch users')
+        return {
+          status: false
+        }
       }
       users_data = usersData.data;
 
@@ -111,8 +117,9 @@ async function loadUsers({ posts }) {
     for (let i = 0; i < posts.length; i++) {
       const id = posts[i].author_id;
       const resUser = await axios.get(`${BASE_URL}/user/${id}`);
-      // console.log('fetchQuery :: resUser :: ', resUser);
-      users.push(resUser.data.data.data)
+      if (resUser) {
+        users.push(resUser.data.data.data)
+      }
     }
   } catch (error) {
     console.log('loadUsers :: error :: ', error);
@@ -121,10 +128,11 @@ async function loadUsers({ posts }) {
     }
   }
 
-  return {
+  const data = {
     data: users,
     status: true
-  };
+  }
+  return data
 }
 
 export const fetchMoreQueryData = () => {
@@ -138,7 +146,10 @@ export const fetchMoreQueryData = () => {
 
       const usersData = await loadUsers({ posts: res.data.data.data })
       if (!usersData.status) {
-        throw Error('Unable to fetch users')
+        // throw Error('Unable to fetch users')
+        return {
+          status: false
+        }
       }
       const users = usersData.data;
 
